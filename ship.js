@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/hacZU523FyM
-
 function Ship(pos, r) {
   Entity.call(this, width / 2, height / 2, 20);
   this.isDestroyed = false;

@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/hacZU523FyM
-
 function Asteroid(pos, r, size) {
   if (pos == null) {
     pos = createVector(random(width), random(height));

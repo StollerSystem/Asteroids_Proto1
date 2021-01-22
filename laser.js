@@ -1,30 +1,4 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/hacZU523FyM
-
-// Array of RGB color choices that will be selected randomly for the laser color
-// var colors = [
-//   [248, 12, 18],
-//   [238, 17, 0],
-//   [255, 51, 17],
-//   [255, 68, 34],
-//   [255, 102, 68],
-//   [255, 153, 51],
-//   [254, 174, 45],
-//   [204, 187, 51],
-//   [208, 195, 16],
-//   [170, 204, 34],
-//   [105, 208, 37],
-//   [34, 204, 170],
-//   [18, 189, 185],
-//   [17, 170, 187],
-//   [68, 68, 221],
-//   [51, 17, 187],
-//   [59, 12, 189],
-//   [68, 34, 153]
-// ]
-
+// Possible laser colors
 var colors = [ 
   [0, 255, 255],
   [0, 255, 255], 

@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingrainbow.com
-// http://patreon.com/codingrainbow
-// Code for: https://youtu.be/hacZU523FyM
-
 var ship;
 var hud;
 var asteroids = [];
@@ -63,7 +58,6 @@ function draw() {
     if(lasers[i].offscreen()) {
       // Destroy lasers that go off screen.
       lasers.splice(i, 1);
-
       continue;
     }
 
