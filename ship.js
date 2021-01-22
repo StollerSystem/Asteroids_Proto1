@@ -6,13 +6,23 @@
 function Ship(pos, r) {
   Entity.call(this, width / 2, height / 2, 20);
   this.isDestroyed = false;
-  this.destroyFrames = 600;
+  this.destroyFrames = 1000;
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
+  
+  this.skip = false;//tail effect??
+  // magic for tail effect
+  this.lastPos = new Array(15);
+  for (var i = 0; i < this.lastPos.length; i++) {
+    this.lastPos[i] = new Array(3);
+    this.lastPos[i][0] = createVector(this.pos.x, this.pos.y);
+    this.lastPos[i][1] = this.heading;
+    this.lastPos[i][2] = 1;
+  }
 
   var scope = this;
-  input.registerAsListener(" ".charCodeAt(0), function(char, code, press) {
+  input.registerAsListener(" ".charCodeAt(0), function (char, code, press) {
     if (!press) {
       return;
     }
@@ -22,34 +32,53 @@ function Ship(pos, r) {
     laser.playSoundEffect(effect);
     lasers.push(laser);
   });
-  input.registerAsListener(RIGHT_ARROW, function(char, code, press) {
+  input.registerAsListener(RIGHT_ARROW, function (char, code, press) {
     scope.setRotation(press ? 0.08 : 0);
   });
-  input.registerAsListener(LEFT_ARROW, function(char, code, press) {
+  input.registerAsListener(LEFT_ARROW, function (char, code, press) {
     scope.setRotation(press ? -0.08 : 0);
   });
-  input.registerAsListener(UP_ARROW, function(char, code, press) {
-    scope.setAccel(press ? 0.3 : 0);
+  input.registerAsListener(UP_ARROW, function (char, code, press) {
+    scope.setAccel(press ? 0.2 : 0);
   });
 
-  this.update = function() {
+  this.update = function () {
     Entity.prototype.update.call(this);
-    this.vel.mult(0.999);
+    this.vel.mult(boostStabilizer);
     if (this.isDestroyed) {
       for (var i = 0; i < this.brokenParts.length; i++) {
         this.brokenParts[i].pos.add(this.brokenParts[i].vel);
         this.brokenParts[i].heading += this.brokenParts[i].rot;
       }
     } else {
-      this.vel.mult(0.99);
+      this.vel.mult(boostStabilizer);
     }
     if (this.shields > 0) {
       this.shields -= 1;
     }
+
+    this.skip = !this.skip;
+    if (this.skip === false) {
+      //tail color
+      for (var i = this.lastPos.length - 1; i > 0; i--) {
+        this.lastPos[i][0] = this.lastPos[i - 1][0];
+        this.lastPos[i][1] = this.lastPos[i - 1][1];
+        this.lastPos[i][2] = this.lastPos[i - 1][2];
+      }
+      this.lastPos[0][0] = createVector(this.pos.x - this.r * cos(this.heading), this.pos.y - this.r * sin(this.heading));
+      this.lastPos[0][1] = this.heading;
+      if (this.ported) {
+        this.lastPos[0][2] = 0;
+        this.ported = false;
+      } else {
+        this.lastPos[0][2] = 1;
+      }
+      // this.tailHue += this.vel.mag() * 1.5;
+    }
   }
 
   this.brokenParts = [];
-  this.destroy = function() {
+  this.destroy = function () {
     this.isDestroyed = true;
     for (var i = 0; i < 4; i++)
       this.brokenParts[i] = {
@@ -60,7 +89,7 @@ function Ship(pos, r) {
       };
   }
 
-  this.hits = function(asteroid) {
+  this.hits = function (asteroid) {
 
     // Are shields up?
     if (this.shields > 0) {
@@ -69,7 +98,7 @@ function Ship(pos, r) {
 
     // Is the ship far from the asteroid?
     var dist2 = (this.pos.x - asteroid.pos.x) * (this.pos.x - asteroid.pos.x)
-              + (this.pos.y - asteroid.pos.y) * (this.pos.y - asteroid.pos.y);
+      + (this.pos.y - asteroid.pos.y) * (this.pos.y - asteroid.pos.y);
     if (dist2 >= (asteroid.rmax + this.rmax2) * (asteroid.rmax + this.rmax2)) {
       return false;
     }
@@ -85,7 +114,7 @@ function Ship(pos, r) {
       createVector(-2 / 3 * this.r, -this.r).rotate(this.heading),
       createVector(4 / 3 * this.r, 0).rotate(this.heading)
     ];
-    for(var i = 0; i < vertices.length; i++) {
+    for (var i = 0; i < vertices.length; i++) {
       vertices[i] = p5.Vector.add(vertices[i], this.pos);
     }
     var asteroid_vertices = asteroid.vertices();
@@ -94,7 +123,7 @@ function Ship(pos, r) {
       for (var j = 0; j < vertices.length; j++) {
         var next_i = (i + 1) % asteroid_vertices.length;
         if (lineIntersect(vertices[j], vertices[(j + 1) % vertices.length],
-                          asteroid_vertices[i], asteroid_vertices[next_i])) {
+          asteroid_vertices[i], asteroid_vertices[next_i])) {
           return true;
         }
       }
@@ -102,11 +131,12 @@ function Ship(pos, r) {
     return false;
   }
 
-  this.render = function() {
+  this.render = function () {
     if (this.isDestroyed) {
       for (var i = 0; i < this.brokenParts.length; i++) {
         push();
-        stroke(floor(255 * ((this.destroyFrames--) / 600)));
+        // the destroyed ship lines are hard coded to green
+        stroke(0, floor(255 * ((this.destroyFrames--) / 1000)), 0);
         var bp = this.brokenParts[i];
         translate(bp.pos.x, bp.pos.y);
         rotate(bp.heading);
@@ -114,17 +144,34 @@ function Ship(pos, r) {
         pop();
       }
     } else {
+
+      //render tail
+      for (var i = this.lastPos.length - 2; i >= 0; i--) {
+        stroke(0,0,100);
+        fill(1);
+        beginShape();
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
+
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r);
+
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r);
+
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
+        endShape(CLOSE);
+      }
+
+
       push();
       translate(this.pos.x, this.pos.y);
       rotate(this.heading);
       fill(0);
       // shield color needs adjustment 
-      var shieldCol = random(map(this.shields, 0, shieldTime, 255, 0), 255);      
+      var shieldCol = random(map(this.shields, 0, shieldTime, 255, 0), 255);
       var shipColor = this.shields > 0 ? shieldCol : mainColor;
       stroke(shipColor);
       triangle(-2 / 3 * this.r, -this.r,
-               -2 / 3 * this.r, this.r,
-                4 / 3 * this.r, 0);
+        -2 / 3 * this.r, this.r,
+        4 / 3 * this.r, 0);
 
       if (this.accelMagnitude != 0) {
         translate(-this.r, 0);

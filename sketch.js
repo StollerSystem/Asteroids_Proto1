@@ -12,7 +12,8 @@ var dust = [];
 var explosionSoundEffects = [];
 var canPlay = true;
 var shieldTime = 180;
-var mainColor = 'rgb(0,255,50)'
+var mainColor = 'rgb(0,255,50)';
+var boostStabilizer = 1; // anything below one ship down after boosting 
 
  function preload() {
   // Laser and Explosion Sound Effects are loaded here as opposed to the laser
@@ -87,7 +88,7 @@ function draw() {
           // Next level
           level++;
           spawnAsteroids();
-          ship.shields = shieldTime;
+          ship.shields = shieldTime; 
         }
         break;
       }
