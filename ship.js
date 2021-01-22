@@ -169,8 +169,8 @@ function Ship(pos, r) {
       var shieldCol = random(map(this.shields, 0, shieldTime, 255, 0), 255);
       var shipColor = this.shields > 0 ? shieldCol : mainColor;
       stroke(shipColor);
-      triangle(-2 / 3 * this.r, -this.r,
-        -2 / 3 * this.r, this.r,
+      triangle(-this.r, -this.r,
+        -this.r, this.r,
         4 / 3 * this.r, 0);
 
       if (this.accelMagnitude != 0) {

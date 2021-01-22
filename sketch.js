@@ -13,7 +13,7 @@ var explosionSoundEffects = [];
 var canPlay = true;
 var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
-var boostStabilizer = 1; // anything below one ship down after boosting 
+var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 
  function preload() {
   // Laser and Explosion Sound Effects are loaded here as opposed to the laser
