@@ -8,6 +8,7 @@ var explosionSoundEffects = [];
 var canPlay = true;
 var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
+var mainRGB = [0,255,0]
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 
  function preload() {
@@ -68,7 +69,7 @@ function draw() {
         asteroids[j].playSoundEffect(explosionSoundEffects);
         score += points[asteroids[j].size];
         var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
-        var dustNum = (asteroids[j].size + 1) * 8;
+        var dustNum = (asteroids[j].size*2 + 1) * 10;
         addDust(asteroids[j].pos, dustVel, dustNum);
         // The new smaller asteroids broken lasers are added to the same list
         // of asteroids, so they can be referenced the same way as their full
@@ -91,6 +92,7 @@ function draw() {
 
   ship.update();
 
+  // DESTROY DUST
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].update();
     if (dust[i].transparency <= 0) {

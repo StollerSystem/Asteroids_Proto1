@@ -5,16 +5,19 @@ function Ship(pos, r) {
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
-  
+  this.ported = false;
+
+
   this.skip = false;//tail effect??
   // magic for tail effect
-  this.lastPos = new Array(15);
+  this.lastPos = new Array(30);
   for (var i = 0; i < this.lastPos.length; i++) {
     this.lastPos[i] = new Array(3);
     this.lastPos[i][0] = createVector(this.pos.x, this.pos.y);
     this.lastPos[i][1] = this.heading;
     this.lastPos[i][2] = 1;
   }
+
 
   var scope = this;
   input.registerAsListener(" ".charCodeAt(0), function (char, code, press) {
@@ -52,6 +55,7 @@ function Ship(pos, r) {
       this.shields -= 1;
     }
 
+    // More tail effect magic 
     this.skip = !this.skip;
     if (this.skip === false) {
       //tail color
@@ -141,9 +145,21 @@ function Ship(pos, r) {
     } else {
 
       //render tail
+      // console.log(this.ported)
       for (var i = this.lastPos.length - 2; i >= 0; i--) {
-        stroke(0,0,100);
-        fill(1);
+
+        // console.log(this.ported)
+
+        // stroke(0,0,255,this.lastPos[i][2])
+        // fill(1)
+        // console.log(this.lastPos[i][2])
+        // stroke(`rgba(0,0,255,${this.lastPos[i][2]/2})`)
+        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/2})`)
+        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/2})`);
+
+        // stroke(255,255,255,this.lastPos[i][2])
+        // fill(255,255,255,this.lastPos[i][2]);
+
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
 
@@ -153,6 +169,7 @@ function Ship(pos, r) {
 
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
         endShape(CLOSE);
+
       }
 
 

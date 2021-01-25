@@ -2,17 +2,20 @@ function Dust(pos, vel) {
   this.pos = pos.copy();
   this.vel = vel.copy();
   this.vel.add(p5.Vector.random2D().mult(random(0.5, 1.5)));
-  this.transparency = random(200, 255);
+  this.transparency = 1
 
   this.update = function() {
     this.pos.add(this.vel);
-    this.transparency -= 1;
+    this.transparency -= .005;
   }
 
   this.render = function() {
     if (this.transparency > 0) {
-      stroke(this.transparency);
+      push();
+      stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.transparency})`);
+      strokeWeight(2);
       point(this.pos.x, this.pos.y);
+      pop();
     }
   }
  }

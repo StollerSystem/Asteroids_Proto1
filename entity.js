@@ -7,6 +7,7 @@ function Entity(x, y, radius)
   this.rotation = 0;
   this.vel = createVector(0, 0);
   this.accelMagnitude = 0;
+  
 }
 
 Entity.prototype.update = function() {
@@ -28,14 +29,18 @@ Entity.prototype.setAccel = function(magnitude)
 
 Entity.prototype.edges = function() {
   if (this.pos.x > width + this.rmax) {
-    this.pos.x = -this.rmax;
+    this.pos.x = -this.rmax;    
+    this.ported = true;
   } else if (this.pos.x < -this.rmax) {
     this.pos.x = width + this.rmax;
+    this.ported = true;
   }
   if (this.pos.y > height + this.rmax) {
     this.pos.y = -this.rmax;
+    this.ported = true;
   } else if (this.pos.y < -this.rmax) {
     this.pos.y = height + this.rmax;
+    this.ported = true;
   }
 }
 

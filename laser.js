@@ -19,8 +19,8 @@ function Laser(spos, svel, angle) {
 
   this.render = function() {
     push();
-    stroke(this.color[0], this.color[1], this.color[2]);
-    strokeWeight(this.r);
+    stroke(mainColor);
+    strokeWeight(this.r*1.5);
     point(this.pos.x, this.pos.y);
     pop();
   }
