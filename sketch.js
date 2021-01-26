@@ -51,6 +51,8 @@ function draw() {
   for(var i = 0; i < asteroids.length; i++) {
     if(ship.hits(asteroids[i]) && canPlay) {
       canPlay = false;
+      var dustVel = p5.Vector.add(ship.vel.mult(0.2), asteroids[i].vel);
+      addDust(ship.pos, dustVel, 15);
       ship.destroy();
       input.reset();
       setTimeout(function() {
