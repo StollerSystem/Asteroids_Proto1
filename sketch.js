@@ -9,6 +9,7 @@ var canPlay = true;
 var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
 var mainRGB = [0,255,0]
+var secondaryRGB = [0,0,255]
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 let mainFont;
 let pts;

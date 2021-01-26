@@ -19,7 +19,8 @@ function Laser(spos, svel, angle) {
 
   this.render = function() {
     push();
-    stroke(mainColor);
+    var trans = random(1,.9)
+    stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
     strokeWeight(this.r*1.5);
     point(this.pos.x, this.pos.y);
     pop();

@@ -61,7 +61,7 @@ function Ship(pos, r) {
 
     // More tail effect magic 
     this.tailSkip = !this.tailSkip;
-    if (this.tailSkip === false) {      
+    if (this.tailSkip === false) {
       for (var i = this.lastPos.length - 1; i > 0; i--) {
         this.lastPos[i][0] = this.lastPos[i - 1][0];
         this.lastPos[i][1] = this.lastPos[i - 1][1];
@@ -69,13 +69,13 @@ function Ship(pos, r) {
       }
       this.lastPos[0][0] = createVector(this.pos.x - this.r * cos(this.heading), this.pos.y - this.r * sin(this.heading));
       this.lastPos[0][1] = this.heading;
-      if (this.ported) {
+      if (this.tailEdge) {
         this.lastPos[0][2] = 0;
-        this.ported = false;
+        this.tailEdge = false;
       } else {
         this.lastPos[0][2] = 1;
       }
-      // this.tailHue += this.vel.mag() * 1.5;
+
     }
   }
 
@@ -137,8 +137,9 @@ function Ship(pos, r) {
     if (this.isDestroyed) {
       for (var i = 0; i < this.brokenParts.length; i++) {
         push();
-        // the destroyed ship lines are hard coded to green
-        stroke(0, floor(255 * ((this.destroyFrames--) / 1000)), 0);
+        let transNum = (1 * ((this.destroyFrames--) / 1000))
+        let trans = transNum > 0 ? transNum : 0;
+        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${trans})`);
         var bp = this.brokenParts[i];
         translate(bp.pos.x, bp.pos.y);
         rotate(bp.heading);
@@ -147,16 +148,10 @@ function Ship(pos, r) {
       }
     } else {
 
-      //render tail
-      
+      //render vapor tail      
       for (var i = this.lastPos.length - 2; i >= 0; i--) {
-
-        
-        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/10})`)
-        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/6})`);
-
-        
-
+        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 10})`)
+        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 6})`);
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
 
@@ -166,10 +161,9 @@ function Ship(pos, r) {
 
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
         endShape(CLOSE);
-
       }
 
-
+      // draw ship
       push();
       translate(this.pos.x, this.pos.y);
       rotate(this.heading);
@@ -182,16 +176,54 @@ function Ship(pos, r) {
         -this.r, this.r,
         4 / 3 * this.r, 0);
 
+      // thruster animation
       if (this.accelMagnitude != 0) {
-        push() 
-        stroke(255,0,0)
-        strokeWeight(2)
-        translate(-this.r, 0);
-        rotate(random(PI / 4, 3 * PI / 4));
-        line(0, 0, 0, 20);
+        push()        
+        var trans = random(.9, .2)
+        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        strokeWeight(1)
+        translate(-this.r, 0);        
+        var thrustEnd = random(-45, -10)
+        triangle(this.r - 22, this.r - 10,
+          this.r - 22, -this.r + 10,
+          thrustEnd, 0);        
         pop()
       }
 
+      if (this.rotation > 0) {
+        push()
+        // stroke(mainColor)
+        var trans = random(.9, .2)
+        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        strokeWeight(1)
+        translate(-this.r, 0);
+        // rotate(random(PI / 4, 3 * PI / 4));
+        var thrustEnd = random(-35, -10)
+        triangle(this.r+15, -10,
+         this.r+25, -3,
+          this.r+20, thrustEnd);
+        // line(0, 0, 0, 20);
+        pop()
+      }
+
+      if (this.rotation < 0) {
+        push()
+        // stroke(mainColor)
+        var trans = random(.9, .2)
+        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        strokeWeight(1)
+        translate(-this.r, 0);
+        // rotate(random(PI / 4, 3 * PI / 4));
+        var thrustEnd = random(35, 10)
+        triangle(this.r+15, 10,
+         this.r+25, 3,
+          this.r+20, thrustEnd);
+        // line(0, 0, 0, 20);
+        pop()
+      }
       pop();
     }
   }
