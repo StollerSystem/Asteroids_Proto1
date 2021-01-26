@@ -5,7 +5,7 @@ function Ship(pos, r) {
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
-  this.ported = false;
+  this.ported = true;
 
 
   this.skip = false;//tail effect??
@@ -57,8 +57,7 @@ function Ship(pos, r) {
 
     // More tail effect magic 
     this.skip = !this.skip;
-    if (this.skip === false) {
-      //tail color
+    if (this.skip === false) {      
       for (var i = this.lastPos.length - 1; i > 0; i--) {
         this.lastPos[i][0] = this.lastPos[i - 1][0];
         this.lastPos[i][1] = this.lastPos[i - 1][1];
@@ -79,7 +78,7 @@ function Ship(pos, r) {
   this.brokenParts = [];
   this.destroy = function () {
     this.isDestroyed = true;
-    for (var i = 0; i < 4; i++)
+    for (var i = 0; i < 6; i++)
       this.brokenParts[i] = {
         pos: this.pos.copy(),
         vel: p5.Vector.random2D(),
@@ -154,20 +153,20 @@ function Ship(pos, r) {
         // fill(1)
         // console.log(this.lastPos[i][2])
         // stroke(`rgba(0,0,255,${this.lastPos[i][2]/2})`)
-        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/2})`)
-        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/2})`);
+        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/10})`)
+        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/6})`);
 
         // stroke(255,255,255,this.lastPos[i][2])
         // fill(255,255,255,this.lastPos[i][2]);
 
         beginShape();
-        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.25) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.25) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
         endShape(CLOSE);
 
       }
@@ -186,9 +185,13 @@ function Ship(pos, r) {
         4 / 3 * this.r, 0);
 
       if (this.accelMagnitude != 0) {
+        push()
+        stroke(255,0,0)
+        strokeWeight(2)
         translate(-this.r, 0);
         rotate(random(PI / 4, 3 * PI / 4));
-        line(0, 0, 0, 15);
+        line(0, 0, 0, 20);
+        pop()
       }
 
       pop();

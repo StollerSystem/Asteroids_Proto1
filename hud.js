@@ -40,9 +40,12 @@ function Hud() {
     drawLives();
     if(lives < 0) {
       push();
-      textSize(60);
-      fill(mainColor);
-      text("GAME OVER", (width / 2) - 100, height / 2);
+      textSize(100);
+      stroke(mainColor)
+      strokeWeight(2)
+      fill(0);
+      text("GAME OVER", (width / 2) - 300, height / 2);
+      pop();
     }
   }
 

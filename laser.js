@@ -31,6 +31,8 @@ function Laser(spos, svel, angle) {
     }
   }
 
+  
+
   this.hits = function(asteroid) {
     // Evaluate if the asteroid was hit based on the range of the laser if one
     // of these conditions hold, then there is no need to check that the laser
