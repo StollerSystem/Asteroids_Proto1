@@ -30,17 +30,17 @@ Entity.prototype.setAccel = function(magnitude)
 Entity.prototype.edges = function() {
   if (this.pos.x > width + this.rmax) {
     this.pos.x = -this.rmax;    
-    this.ported = true;
+    this.tailEdge = true;
   } else if (this.pos.x < -this.rmax) {
     this.pos.x = width + this.rmax;
-    this.ported = true;
+    this.tailEdge = true;
   }
   if (this.pos.y > height + this.rmax) {
     this.pos.y = -this.rmax;
-    this.ported = true;
+    this.tailEdge = true;
   } else if (this.pos.y < -this.rmax) {
     this.pos.y = height + this.rmax;
-    this.ported = true;
+    this.tailEdge = true;
   }
 }
 

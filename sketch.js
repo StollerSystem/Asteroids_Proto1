@@ -10,8 +10,13 @@ var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
 var mainRGB = [0,255,0]
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
+let mainFont;
+let pts;
+var title = true;
 
  function preload() {
+   mainFont = loadFont('digital.ttf')
+   
   // Laser and Explosion Sound Effects are loaded here as opposed to the laser
   // or asteroid files because the asteroid destruction logic is here and it
   // also reduces redundancy of each asteroid or laser containing sound data.
@@ -32,6 +37,11 @@ function setup() {
   ship = new Ship();
   hud = new Hud();
   spawnAsteroids();
+
+  pts = mainFont.textToPoints('ASTRO-BLASTER', 0, 0, 200,{
+    sampleFactor: 0.25,
+    simplifyThreshold: 0
+  });
 }
 
 function draw() {

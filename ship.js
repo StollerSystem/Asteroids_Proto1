@@ -5,10 +5,10 @@ function Ship(pos, r) {
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
-  this.ported = true;
+  this.tailEdge = true;
+  this.tailSkip = false;//tail effect??
 
 
-  this.skip = false;//tail effect??
   // magic for tail effect
   this.lastPos = new Array(30);
   for (var i = 0; i < this.lastPos.length; i++) {
@@ -25,18 +25,22 @@ function Ship(pos, r) {
       return;
     }
 
+    title = false;
     var laser = new Laser(scope.pos, scope.vel, scope.heading);
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
     laser.playSoundEffect(effect);
     lasers.push(laser);
   });
   input.registerAsListener(RIGHT_ARROW, function (char, code, press) {
+    title = false;
     scope.setRotation(press ? 0.08 : 0);
   });
   input.registerAsListener(LEFT_ARROW, function (char, code, press) {
+    title = false;
     scope.setRotation(press ? -0.08 : 0);
   });
   input.registerAsListener(UP_ARROW, function (char, code, press) {
+    title = false;
     scope.setAccel(press ? 0.2 : 0);
   });
 
@@ -51,13 +55,13 @@ function Ship(pos, r) {
     } else {
       this.vel.mult(boostStabilizer);
     }
-    if (this.shields > 0) {
+    if (this.shields > 0 && !title) {
       this.shields -= 1;
     }
 
     // More tail effect magic 
-    this.skip = !this.skip;
-    if (this.skip === false) {      
+    this.tailSkip = !this.tailSkip;
+    if (this.tailSkip === false) {      
       for (var i = this.lastPos.length - 1; i > 0; i--) {
         this.lastPos[i][0] = this.lastPos[i - 1][0];
         this.lastPos[i][1] = this.lastPos[i - 1][1];
@@ -144,20 +148,14 @@ function Ship(pos, r) {
     } else {
 
       //render tail
-      // console.log(this.ported)
+      
       for (var i = this.lastPos.length - 2; i >= 0; i--) {
 
-        // console.log(this.ported)
-
-        // stroke(0,0,255,this.lastPos[i][2])
-        // fill(1)
-        // console.log(this.lastPos[i][2])
-        // stroke(`rgba(0,0,255,${this.lastPos[i][2]/2})`)
+        
         stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/10})`)
         fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2]/6})`);
 
-        // stroke(255,255,255,this.lastPos[i][2])
-        // fill(255,255,255,this.lastPos[i][2]);
+        
 
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
@@ -185,7 +183,7 @@ function Ship(pos, r) {
         4 / 3 * this.r, 0);
 
       if (this.accelMagnitude != 0) {
-        push()
+        push() 
         stroke(255,0,0)
         strokeWeight(2)
         translate(-this.r, 0);
