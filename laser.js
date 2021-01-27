@@ -27,7 +27,7 @@ function Laser(spos, svel, angle) {
     pop();
     // glow effect
     push();
-    var size = this.r * (random(2, 10))
+    var size = this.r * (random(2, 12))
     stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},.3) `);
     strokeWeight(size);
     point(this.pos.x, this.pos.y);
@@ -35,7 +35,7 @@ function Laser(spos, svel, angle) {
   }
 
   this.playSoundEffect = function (sound) {
-    if (!sound.isPlaying()) {
+    if (!sound.isPlaying()) {      
       sound.play();
     }
   }

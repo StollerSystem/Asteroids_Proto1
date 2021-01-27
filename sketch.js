@@ -8,8 +8,8 @@ var explosionSoundEffects = [];
 var canPlay = true;
 var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
-var mainRGB = [0,255,0]
-var secondaryRGB = [0,0,255]
+var mainRGB = [0,255,50]
+var secondaryRGB = [0,50,255]
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 let mainFont;
 let pts;
@@ -34,6 +34,7 @@ var points = [200, 100, 50, 25];
 var level = 0;
 
 function setup() {
+  
   createCanvas(windowWidth, windowHeight);
   ship = new Ship();
   hud = new Hud();
