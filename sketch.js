@@ -30,7 +30,7 @@ var title = true;
 }
 var score = 0;
 var lives = 3;
-var points = [100, 50, 20]; // small, med, large points
+var points = [200, 100, 50, 25]; // small, med, large points
 var level = 0;
 
 function setup() {
@@ -82,7 +82,7 @@ function draw() {
         asteroids[j].playSoundEffect(explosionSoundEffects);
         score += points[asteroids[j].size];
         var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
-        var dustNum = (asteroids[j].size*2 + 1) * 10;
+        var dustNum = (asteroids[j].size*2 + 1) * 7;
         addDust(asteroids[j].pos, dustVel, dustNum);
         // The new smaller asteroids broken lasers are added to the same list
         // of asteroids, so they can be referenced the same way as their full
@@ -133,8 +133,8 @@ function draw() {
 }
 
 function spawnAsteroids() {
-  for(var i = 0; i < level + 5; i++) {
-    asteroids.push(new Asteroid(null, null, 2));
+  for(var i = 0; i < level + 4; i++) {
+    asteroids.push(new Asteroid(null, null, 3));
   }
 }
 

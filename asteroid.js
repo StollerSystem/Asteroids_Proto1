@@ -3,7 +3,7 @@ function Asteroid(pos, r, size) {
     pos = createVector(random(width), random(height));
   }
 
-  r = r != null ? r * 0.5 : random(40, 60);
+  r = r != null ? r * 0.5 : random(80, 105);
   Entity.call(this, pos.x, pos.y, r);
 
   this.vel = p5.Vector.random2D();
@@ -12,6 +12,8 @@ function Asteroid(pos, r, size) {
   //smaller asteroids go a bit faster
   this.size = size;
   switch(size) {
+    case 2:
+      this.vel.mult(1); break;
     case 1:
       this.vel.mult(2); break;
     case 0:

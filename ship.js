@@ -24,9 +24,11 @@ function Ship(pos, r) {
     if (!press) {
       return;
     }
-
     title = false;
     var laser = new Laser(scope.pos, scope.vel, scope.heading);
+    if (score > 0) {
+      score -= 5;
+    }
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
     laser.playSoundEffect(effect);
     lasers.push(laser);

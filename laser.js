@@ -1,8 +1,8 @@
 // Possible laser colors
-var colors = [ 
+var colors = [
   [0, 255, 255],
-  [0, 255, 255], 
-  [0, 255, 255]  
+  [0, 255, 255],
+  [0, 255, 255]
 ]
 
 function Laser(spos, svel, angle) {
@@ -17,29 +17,36 @@ function Laser(spos, svel, angle) {
   this.vel.add(svel);
   this.color = colors[floor(random(0, colors.length - 1))];
 
-  this.render = function() {
+  this.render = function () {
     push();
-    var trans = random(1,.9)
+    var trans = random(1, .9)
     stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
     strokeWeight(this.r*1.5);
     point(this.pos.x, this.pos.y);
     pop();
+
+    push();
+    var size = this.r * (random(2, 10))
+    stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},.3) `);
+    strokeWeight(size);
+    point(this.pos.x, this.pos.y);
+    pop();
   }
 
-  this.playSoundEffect = function(sound) {
+  this.playSoundEffect = function (sound) {
     if (!sound.isPlaying()) {
       sound.play();
     }
   }
 
-  
 
-  this.hits = function(asteroid) {
+
+  this.hits = function (asteroid) {
     // Evaluate if the asteroid was hit based on the range of the laser if one
     // of these conditions hold, then there is no need to check that the laser
     // intersected the asteroid.
     dist2 = (this.pos.x - asteroid.pos.x) * (this.pos.x - asteroid.pos.x)
-          + (this.pos.y - asteroid.pos.y) * (this.pos.y - asteroid.pos.y);
+      + (this.pos.y - asteroid.pos.y) * (this.pos.y - asteroid.pos.y);
     if (dist2 <= asteroid.rmin2) {
       return true;
     }
@@ -54,22 +61,22 @@ function Laser(spos, svel, angle) {
     var asteroid_vertices = asteroid.vertices();
     for (var i = 0; i < asteroid_vertices.length - 1; i++) {
       if (lineIntersect(last_pos,
-                        this.pos,
-                        asteroid_vertices[i],
-                        asteroid_vertices[i + 1])) {
+        this.pos,
+        asteroid_vertices[i],
+        asteroid_vertices[i + 1])) {
         return true;
       }
     }
     if (lineIntersect(last_pos,
-                      this.pos,
-                      asteroid_vertices[0],
-                      asteroid_vertices[asteroid_vertices.length - 1])) {
+      this.pos,
+      asteroid_vertices[0],
+      asteroid_vertices[asteroid_vertices.length - 1])) {
       return true;
     }
     return false;
   }
 
-  this.offscreen = function() {
+  this.offscreen = function () {
     if (this.pos.x > width || this.pos.x < 0) {
       return true;
     }
