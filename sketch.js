@@ -30,7 +30,7 @@ var title = true;
 }
 var score = 0;
 var lives = 3;
-var points = [200, 100, 50, 25]; // small, med, large points
+var points = [200, 100, 50, 25]; 
 var level = 0;
 
 function setup() {
@@ -115,22 +115,17 @@ function draw() {
 
   // Render
   background(0);
-
   for (var i = 0; i < asteroids.length; i++) {
     asteroids[i].render();
   }
-
   for (var i = lasers.length - 1; i >= 0; i--) {
     lasers[i].render();
   }
-
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].render();
   }
-
   ship.render();
   hud.render();
-
 }
 
 function spawnAsteroids() {

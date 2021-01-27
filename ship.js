@@ -5,8 +5,8 @@ function Ship(pos, r) {
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
-  this.tailEdge = true;
-  this.tailSkip = false;//tail effect??
+  this.tailEdge = true; //if true will hide vapor trail
+  this.tailSkip = false;//tail effect toggles between true/false
 
 
   // magic for tail effect
@@ -29,10 +29,8 @@ function Ship(pos, r) {
     if (score > 0) {
       score -= 5;
     }
-    // laser dust effeect?
-    // var dustVel = p5.Vector.copy(laser.vel);
-    var dustVel = laser.vel.copy();   
-    // var dustPos = createVector(scope.pos.x, scope.pos.y) 
+    
+    var dustVel = laser.vel.copy();    
     addDust(scope.pos, dustVel.mult(.5), 4, .045, "secondary", 5);
 
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
@@ -77,9 +75,9 @@ function Ship(pos, r) {
       }
       this.lastPos[0][0] = createVector(this.pos.x - this.r * cos(this.heading), this.pos.y - this.r * sin(this.heading));
       this.lastPos[0][1] = this.heading;
-      if (this.tailEdge) {
+      if (this.tailEdge) {        
         this.lastPos[0][2] = 0;
-        this.tailEdge = false;
+        this.tailEdge = false;        
       } else {
         this.lastPos[0][2] = 1;
       }
@@ -144,12 +142,7 @@ function Ship(pos, r) {
   }
 
   this.render = function () {
-    if (this.isDestroyed) {
-
-      // // dust effect?
-      // var dustVel = p5.Vector.add(this.vel.mult(0.2), asteroids[j].vel);
-      // var dustNum = (asteroids[j].size * 2 + 1) * 10;
-      
+    if (this.isDestroyed) {      
       // ship debris
       for (var i = 0; i < this.brokenParts.length; i++) {
         push();
@@ -163,10 +156,15 @@ function Ship(pos, r) {
         pop();
       }
     } else {
-
       //render vapor tail      
       for (var i = this.lastPos.length - 2; i >= 0; i--) {
-        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 10})`)
+        push();
+        // won't render the tail stroke right after respawn...looks werid 
+        if (this.shields < 170 ) {
+          stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 10})`)
+        } else {
+          stroke(0);
+        }
         fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 6})`);
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
@@ -177,6 +175,7 @@ function Ship(pos, r) {
 
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
         endShape(CLOSE);
+        pop();
       }
 
       // draw ship
@@ -184,10 +183,13 @@ function Ship(pos, r) {
       translate(this.pos.x, this.pos.y);
       rotate(this.heading);
       fill(0);
-      // shield color needs adjustment 
-      var shieldCol = random(map(this.shields, 0, shieldTime, 255, 0), 255);
+      // shield up effect 
+      var shieldTrans = random(1,.3)
+      var shieldCol = `rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${shieldTrans})`
+      var weight = this.shields > 0 ? random(1,3) : 1;
       var shipColor = this.shields > 0 ? shieldCol : mainColor;
       stroke(shipColor);
+      strokeWeight(weight)
       triangle(-this.r, -this.r,
         -this.r, this.r,
         4 / 3 * this.r, 0);

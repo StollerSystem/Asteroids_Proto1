@@ -1,9 +1,9 @@
 // Possible laser colors
-var colors = [
-  [0, 255, 255],
-  [0, 255, 255],
-  [0, 255, 255]
-]
+// var colors = [
+//   [0, 255, 255],
+//   [0, 255, 255],
+//   [0, 255, 255]
+// ]
 
 function Laser(spos, svel, angle) {
   // Create an instance of laser from its super class Entity. This is done
@@ -15,16 +15,17 @@ function Laser(spos, svel, angle) {
   this.vel = p5.Vector.fromAngle(angle);
   this.vel.mult(10);
   this.vel.add(svel);
-  this.color = colors[floor(random(0, colors.length - 1))];
+  // this.color = colors[floor(random(0, colors.length - 1))];
 
   this.render = function () {
+    // laser
     push();
     var trans = random(1, .9)
     stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
     strokeWeight(this.r*1.5);
     point(this.pos.x, this.pos.y);
     pop();
-
+    // glow effect
     push();
     var size = this.r * (random(2, 10))
     stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},.3) `);
