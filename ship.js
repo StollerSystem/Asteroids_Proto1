@@ -10,7 +10,7 @@ function Ship(pos, r) {
 
 
   // magic for tail effect
-  this.lastPos = new Array(30);
+  this.lastPos = new Array(20);
   for (var i = 0; i < this.lastPos.length; i++) {
     this.lastPos[i] = new Array(3);
     this.lastPos[i][0] = createVector(this.pos.x, this.pos.y);
@@ -29,6 +29,12 @@ function Ship(pos, r) {
     if (score > 0) {
       score -= 5;
     }
+    // laser dust effeect?
+    // var dustVel = p5.Vector.copy(laser.vel);
+    var dustVel = laser.vel.copy();   
+    // var dustPos = createVector(scope.pos.x, scope.pos.y) 
+    addDust(scope.pos, dustVel.mult(.5), 4, .045, "secondary", 5);
+
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
     laser.playSoundEffect(effect);
     lasers.push(laser);
@@ -163,13 +169,13 @@ function Ship(pos, r) {
         stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 10})`)
         fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 6})`);
         beginShape();
-        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.05) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * -1 * ((this.lastPos.length - (i + 1) / 1.05) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.1) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i + 1][0].x + sin(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.05) / this.lastPos.length) * this.r, this.lastPos[i + 1][0].y - cos(this.lastPos[i + 1][1]) * (+1) * ((this.lastPos.length - (i + 1) / 1.05) / this.lastPos.length) * this.r);
 
-        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.1) / this.lastPos.length) * this.r);
+        vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * (+1) * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
         endShape(CLOSE);
       }
 

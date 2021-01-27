@@ -124,12 +124,13 @@ function draw() {
     lasers[i].render();
   }
 
-  ship.render();
-  hud.render();
-
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].render();
   }
+
+  ship.render();
+  hud.render();
+
 }
 
 function spawnAsteroids() {

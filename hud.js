@@ -53,14 +53,14 @@ function Hud() {
 
     if (title) {
 
-      // push();
-      // textSize(200);
-      // textFont(mainFont)
-      // stroke(mainColor)
-      // strokeWeight(2)
-      // fill(0);
-      // text("ASTRO BLASTER!", (width / 2) - 575, height / 3);
-      // pop();
+      push();
+      textSize(25);
+      textFont(mainFont)
+      stroke(mainColor)
+      strokeWeight(1)
+      fill(mainColor);
+      text("UP_ARROW: FORWARD THRUST - LEFT/RIGHT_ARROW: ROTATIONAL THRUST - SPACE_BAR: BLASTER", (width / 2 -410) , height / 3 +50);
+      pop();
 
       push();
       stroke(mainColor);
