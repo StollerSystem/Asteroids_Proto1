@@ -5,10 +5,10 @@ var lasers = [];
 var laserSoundEffects = [];
 var explosionSoundEffects = [];
 var rocketSoundEffects = [];
+var stageSoundEffect;
 var dust = [];
 var canPlay = true;
 var shieldTime = 180;
-// var mainColor = 'rgb(0,255,50)';
 var rgbColor1;
 var rgbColor2;
 var rgbColor3;
@@ -46,6 +46,7 @@ function preload() {
   for (var i = 0; i < 2; i++) {
     rocketSoundEffects[i] = loadSound('audio/rocket-' + i + '.wav');
   }
+  stageSoundEffect = loadSound('audio/stage-complete.wav')
 }
 
 function setup() {  

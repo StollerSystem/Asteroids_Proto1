@@ -80,6 +80,11 @@ function Hud() {
     }
 
     if (stageClear) {
+      
+      // if (!stageSoundEffect.isPlaying() && !soundPlayed) {        
+      //   stageSoundEffect.play();
+      // }
+
       push();
       textSize(100);
       textFont(mainFont)
