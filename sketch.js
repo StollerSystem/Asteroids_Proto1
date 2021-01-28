@@ -15,6 +15,10 @@ let mainFont;
 let pts;
 var title = true;
 var stageClear = false;
+var score = 0;
+var lives = 3;
+var points = [200, 100, 50, 25]; 
+var level = 0;
 
  function preload() {
    mainFont = loadFont('digital.ttf')
@@ -29,10 +33,6 @@ var stageClear = false;
     explosionSoundEffects[i] = loadSound('audio/explosion-'+i+'.mp3');
   }
 }
-var score = 0;
-var lives = 3;
-var points = [200, 100, 50, 25]; 
-var level = 0;
 
 function setup() {
   
@@ -98,11 +98,11 @@ function draw() {
           // Next level
           stageClear = true
           setTimeout(function() {
-            stageClear = false;
             level++;
+            stageClear = false;
             spawnAsteroids();
             ship.shields = shieldTime; 
-          }, 3000)
+          }, 4000)
         }
         break;
       }

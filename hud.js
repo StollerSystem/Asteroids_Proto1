@@ -47,7 +47,7 @@ function Hud() {
       stroke(mainColor)
       strokeWeight(random(1,1.5))
       fill(0);
-      text("GAME OVER", (width / 2) - 300, height / 2);
+      text("GAME OVER!", (width / 2) - 300, height / 2);
       pop();
     }
 

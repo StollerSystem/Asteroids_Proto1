@@ -1,24 +1,13 @@
-// Possible laser colors
-// var colors = [
-//   [0, 255, 255],
-//   [0, 255, 255],
-//   [0, 255, 255]
-// ]
-
-function Laser(spos, svel, angle) {
-  // Create an instance of laser from its super class Entity. This is done
-  // instead of creating its own seperate object type because there is a large
-  // overlap in terms of properties.
+function Laser(spos, svel, angle) {  
+  
   Entity.call(this, spos.x, spos.y, 4);
-
   this.pos = createVector(spos.x, spos.y);
   this.vel = p5.Vector.fromAngle(angle);
   this.vel.mult(10);
-  this.vel.add(svel);
-  // this.color = colors[floor(random(0, colors.length - 1))];
+  this.vel.add(svel);  
 
   this.render = function () {
-    // laser
+    // laser bolt
     push();
     var trans = random(1, .9)
     stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
@@ -39,8 +28,6 @@ function Laser(spos, svel, angle) {
       sound.play();
     }
   }
-
-
 
   this.hits = function (asteroid) {
     // Evaluate if the asteroid was hit based on the range of the laser if one
@@ -86,8 +73,6 @@ function Laser(spos, svel, angle) {
     }
     return false;
   }
-
-
 }
 
 Laser.prototype = Object.create(Entity.prototype);
