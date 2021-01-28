@@ -45,27 +45,26 @@ function Hud() {
       textSize(150);
       textFont(mainFont)
       stroke(mainColor)
-      strokeWeight(2)
+      strokeWeight(random(1,1.5))
       fill(0);
       text("GAME OVER", (width / 2) - 300, height / 2);
       pop();
     }
 
     if (title) {
-
       push();
       textSize(25);
       textFont(mainFont)
       stroke(mainColor)
-      strokeWeight(1)
+      strokeWeight(random(1,1.5))
       fill(mainColor);
       text("'UP_ARROW: FORWARD THRUST' - 'LEFT/RIGHT_ARROW: ROTATIONAL THRUST' - 'SPACE_BAR: BLASTER'", (width / 2 -410) , height / 3 +50);
       pop();
 
       push();
       stroke(mainColor);
-      translate((width / 2) - 575, height / 3);
-      
+      strokeWeight(random(1,1.5))
+      translate((width / 2) - 575, height / 3);      
       noFill();
       let rotX = sin(frameCount / 20) * 10;
       let rotY = cos(frameCount / 20) * 10;
@@ -79,11 +78,23 @@ function Hud() {
       text('ASTRO-BLASTER', -rotX, -rotY);
       pop();
     }
+
+    if (stageClear) {
+      push();
+      textSize(100);
+      textFont(mainFont)
+      stroke(mainColor)
+      strokeWeight(random(2,3))
+      fill(0);
+      text(`STAGE ${level+1} CLEAR!`, (width / 2) - 250, height / 3);
+      pop();
+    }
   }
 
   function drawLives() {
     push();
     stroke(mainColor);
+    strokeWeight(random(1,1.5))
     fill(0);
     var top = createVector((width / 2) + lifeWidth * 2, padding * 2 + size * 2);
     for (var i = 0; i < lives; i++) {
@@ -99,6 +110,7 @@ function Hud() {
   function drawDigit(digitMap, index, pos) {
     push();
     stroke(mainColor);
+    strokeWeight(random(1,1.5))
     for (var i = 0; i < digitMap.length; i++) {
       if (digitMap[i] === true)
         drawLine(i, pos);

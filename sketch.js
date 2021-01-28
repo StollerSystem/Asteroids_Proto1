@@ -14,6 +14,7 @@ var boostStabilizer = 1; // anything below one will slow ship down after boostin
 let mainFont;
 let pts;
 var title = true;
+var stageClear = false;
 
  function preload() {
    mainFont = loadFont('digital.ttf')
@@ -95,9 +96,13 @@ function draw() {
         lasers.splice(i, 1);
         if(asteroids.length == 0) {
           // Next level
-          level++;
-          spawnAsteroids();
-          ship.shields = shieldTime; 
+          stageClear = true
+          setTimeout(function() {
+            stageClear = false;
+            level++;
+            spawnAsteroids();
+            ship.shields = shieldTime; 
+          }, 3000)
         }
         break;
       }
@@ -130,7 +135,7 @@ function draw() {
 }
 
 function spawnAsteroids() {
-  for(var i = 0; i < level + 4; i++) {
+  for(var i = 0; i < level + 1; i++) {
     asteroids.push(new Asteroid(null, null, 3));
   }
 }

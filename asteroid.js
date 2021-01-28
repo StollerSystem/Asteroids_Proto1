@@ -37,6 +37,7 @@ function Asteroid(pos, r, size) {
   this.render = function() {
     push();
     stroke(mainColor);
+    strokeWeight(random(1,1.5))
     noFill();
     translate(this.pos.x, this.pos.y);
     rotate(this.heading);

@@ -186,7 +186,7 @@ function Ship(pos, r) {
       // shield up effect 
       var shieldTrans = random(1,.3)
       var shieldCol = `rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${shieldTrans})`
-      var weight = this.shields > 0 ? random(1,3) : 1;
+      var weight = this.shields > 0 ? random(1,3.5) : random(1,1.5);
       var shipColor = this.shields > 0 ? shieldCol : mainColor;
       stroke(shipColor);
       strokeWeight(weight)

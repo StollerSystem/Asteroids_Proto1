@@ -20,7 +20,7 @@ function Dust(pos, vel, trans, color, weight) {
       } else {
         stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${this.transparency})`);
       }
-      strokeWeight(this.weight);
+      strokeWeight(random(1,this.weight));
       point(this.pos.x, this.pos.y);
       pop();
     }
