@@ -40,14 +40,29 @@ function Ship(pos, r) {
   input.registerAsListener(RIGHT_ARROW, function (char, code, press) {
     title = false;
     scope.setRotation(press ? 0.08 : 0);
+    if (press) {
+      rocketSoundEffects[1].play();
+    } else {
+      rocketSoundEffects[1].stop();
+    }
   });
   input.registerAsListener(LEFT_ARROW, function (char, code, press) {
     title = false;
     scope.setRotation(press ? -0.08 : 0);
+    if (press) {
+      rocketSoundEffects[1].play();
+    } else {
+      rocketSoundEffects[1].stop();
+    }
   });
   input.registerAsListener(UP_ARROW, function (char, code, press) {
     title = false;
     scope.setAccel(press ? 0.2 : 0);
+    if (press) {
+      rocketSoundEffects[0].play();
+    } else {
+      rocketSoundEffects[0].stop();
+    }
   });
 
   this.update = function () {
@@ -139,6 +154,10 @@ function Ship(pos, r) {
       }
     }
     return false;
+  }
+
+  this.playSoundEffect = function(soundArray){
+    soundArray[floor(random(0,soundArray.length))].play();
   }
 
   this.render = function () {

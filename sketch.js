@@ -3,8 +3,9 @@ var hud;
 var asteroids = [];
 var lasers = [];
 var laserSoundEffects = [];
-var dust = [];
 var explosionSoundEffects = [];
+var rocketSoundEffects = [];
+var dust = [];
 var canPlay = true;
 var shieldTime = 180;
 var mainColor = 'rgb(0,255,50)';
@@ -27,10 +28,13 @@ var level = 0;
   // or asteroid files because the asteroid destruction logic is here and it
   // also reduces redundancy of each asteroid or laser containing sound data.
   for (var i =0; i < 3; i++){
-    laserSoundEffects[i] = loadSound('audio/pew-'+i+'.mp3');
+    laserSoundEffects[i] = loadSound('audio/laser-'+i+'.wav');
   }
   for (var i =0; i < 3; i++){
     explosionSoundEffects[i] = loadSound('audio/explosion-'+i+'.mp3');
+  }
+  for (var i =0; i < 2; i++){
+    rocketSoundEffects[i] = loadSound('audio/rocket-'+i+'.wav');
   }
 }
 
@@ -57,6 +61,10 @@ function draw() {
       addDust(ship.pos, dustVel, 15);
       ship.destroy();
       input.reset();
+      // sounds - need to stop rocket sounds here
+      ship.playSoundEffect(explosionSoundEffects);
+      rocketSoundEffects[0].stop();
+      rocketSoundEffects[1].stop();
       setTimeout(function() {
         lives--;
         if(lives >= 0) {
