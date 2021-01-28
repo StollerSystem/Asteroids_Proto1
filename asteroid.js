@@ -36,7 +36,7 @@ function Asteroid(pos, r, size) {
 
   this.render = function() {
     push();
-    stroke(mainColor);
+    stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
     strokeWeight(random(1,1.5))
     noFill();
     translate(this.pos.x, this.pos.y);

@@ -9,25 +9,23 @@ function Laser(spos, svel, angle) {
   this.render = function () {
     // laser bolt
     push();
-    var trans = random(1, .9)
-    stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+    var trans = random(1, .8)
+    stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
     strokeWeight(this.r*1.5);
     point(this.pos.x, this.pos.y);
     pop();
     // glow effect
     push();
-    var size = this.r * (random(2, 12))
-    stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},.3) `);
+    var size = this.r * (random(2, 10))
+    var trans2 = random(.6, .1)
+    stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans2}) `);
     strokeWeight(size);
     point(this.pos.x, this.pos.y);
     pop();
   }
 
   this.playSoundEffect = function (sound) {
-    sound.play();
-    // if (!sound.isPlaying()) {      
-    //   sound.play();
-    // }
+    sound.play();    
   }
 
   this.hits = function (asteroid) {

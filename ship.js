@@ -31,7 +31,7 @@ function Ship(pos, r) {
     }
     
     var dustVel = laser.vel.copy();    
-    addDust(scope.pos, dustVel.mult(.5), 4, .045, "secondary", 5);
+    addDust(scope.pos, dustVel.mult(.5), 4, .045, 2, 5);
 
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
     laser.playSoundEffect(effect);
@@ -167,7 +167,7 @@ function Ship(pos, r) {
         push();
         let transNum = (1 * ((this.destroyFrames--) / 1000))
         let trans = transNum > 0 ? transNum : 0;
-        stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${trans})`);
+        stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${trans})`);
         var bp = this.brokenParts[i];
         translate(bp.pos.x, bp.pos.y);
         rotate(bp.heading);
@@ -180,11 +180,11 @@ function Ship(pos, r) {
         push();
         // won't render the tail stroke right after respawn...looks werid 
         if (this.shields < 170 ) {
-          stroke(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 10})`)
+          stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${this.lastPos[i][2] / 10})`)
         } else {
           stroke(0);
         }
-        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / random(4,6)})`);
+        fill(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${this.lastPos[i][2] / random(4,6)})`);
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
 
@@ -204,9 +204,9 @@ function Ship(pos, r) {
       fill(0);
       // shield up effect 
       var shieldTrans = random(1,.3)
-      var shieldCol = `rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${shieldTrans})`
+      var shieldCol = `rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${shieldTrans})`
       var weight = this.shields > 0 ? random(1.5,4) : random(1,1.5);
-      var shipColor = this.shields > 0 ? shieldCol : mainColor;
+      var shipColor = this.shields > 0 ? shieldCol : `rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`;
       stroke(shipColor);
       strokeWeight(weight)
       triangle(-this.r, -this.r,
@@ -217,8 +217,8 @@ function Ship(pos, r) {
       if (this.accelMagnitude != 0) {
         push()
         var trans = random(.9, .2)
-        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
-        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
+        fill(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
         strokeWeight(1)
         translate(-this.r, 0);
         var thrustEnd = random(-45, -10)
@@ -230,8 +230,8 @@ function Ship(pos, r) {
       if (this.rotation > 0) {
         push()
         var trans = random(.9, .2)
-        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
-        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
+        fill(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
         strokeWeight(1)
         translate(-this.r, 0);
         var thrustEnd = random(-35, -10)
@@ -243,8 +243,8 @@ function Ship(pos, r) {
       if (this.rotation < 0) {
         push()
         var trans = random(.9, .2)
-        stroke(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
-        fill(`rgba(${secondaryRGB[0]},${secondaryRGB[1]},${secondaryRGB[2]},${trans})`);
+        stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
+        fill(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
         strokeWeight(1)
         translate(-this.r, 0);
         var thrustEnd = random(35, 10)

@@ -44,7 +44,7 @@ function Hud() {
       push();
       textSize(150);
       textFont(mainFont)
-      stroke(mainColor)
+      stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`);
       strokeWeight(random(1,1.5))
       fill(0);
       text("GAME OVER!", (width / 2) - 300, height / 2);
@@ -55,14 +55,14 @@ function Hud() {
       push();
       textSize(25);
       textFont(mainFont)
-      stroke(mainColor)
+      stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
       strokeWeight(random(1,1.5))
-      fill(mainColor);
+      fill(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
       text("'UP_ARROW: FORWARD THRUST' - 'LEFT/RIGHT_ARROW: ROTATIONAL THRUST' - 'SPACE_BAR: BLASTER'", (width / 2 -410) , height / 3 +50);
       pop();
 
       push();
-      stroke(mainColor);
+      stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`);
       strokeWeight(random(1,1.5))
       translate((width / 2) - 575, height / 3);      
       noFill();
@@ -83,7 +83,7 @@ function Hud() {
       push();
       textSize(100);
       textFont(mainFont)
-      stroke(mainColor)
+      stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
       strokeWeight(random(2,3))
       fill(0);
       text(`STAGE ${level+1} CLEAR!`, (width / 2) - 250, height / 3);
@@ -93,7 +93,7 @@ function Hud() {
 
   function drawLives() {
     push();
-    stroke(mainColor);
+    stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`);
     strokeWeight(random(1,1.5))
     fill(0);
     var top = createVector((width / 2) + lifeWidth * 2, padding * 2 + size * 2);
@@ -109,7 +109,7 @@ function Hud() {
   //draws the digit based on the digit map
   function drawDigit(digitMap, index, pos) {
     push();
-    stroke(mainColor);
+    stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
     strokeWeight(random(1,1.5))
     for (var i = 0; i < digitMap.length; i++) {
       if (digitMap[i] === true)
