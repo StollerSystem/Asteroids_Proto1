@@ -165,7 +165,7 @@ function Ship(pos, r) {
         } else {
           stroke(0);
         }
-        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / 6})`);
+        fill(`rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${this.lastPos[i][2] / random(4,6)})`);
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
 
@@ -186,7 +186,7 @@ function Ship(pos, r) {
       // shield up effect 
       var shieldTrans = random(1,.3)
       var shieldCol = `rgba(${mainRGB[0]},${mainRGB[1]},${mainRGB[2]},${shieldTrans})`
-      var weight = this.shields > 0 ? random(1,3.5) : random(1,1.5);
+      var weight = this.shields > 0 ? random(1.5,4) : random(1,1.5);
       var shipColor = this.shields > 0 ? shieldCol : mainColor;
       stroke(shipColor);
       strokeWeight(weight)
