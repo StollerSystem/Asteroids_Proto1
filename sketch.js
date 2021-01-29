@@ -2,6 +2,7 @@ var ship;
 var hud;
 var asteroids = [];
 var lasers = [];
+var enemies = [];
 var laserSoundEffects = [];
 var explosionSoundEffects = [];
 var rocketSoundEffects = [];
@@ -16,7 +17,7 @@ var boostStabilizer = 1; // anything below one will slow ship down after boostin
 var mainFont;
 var pts;
 var title = true;
-var stageClear = false;
+var stageClear = false; 
 var score = 0;
 var lives = 3;
 const points = [200, 100, 50, 25];
@@ -55,6 +56,8 @@ function setup() {
   ship = new Ship();
   hud = new Hud();
   spawnAsteroids();
+  //enemy test
+  spawnEnemy();
 
   pts = mainFont.textToPoints('ASTRO-BLASTER', 0, 0, 200, {
     sampleFactor: 0.25,
@@ -128,6 +131,10 @@ function draw() {
     }
   }
 
+  for (var i = enemies.length - 1; i >= 0; i--) {
+    enemies[i].update();
+  }
+
   ship.update();
 
   // DESTROY DUST
@@ -149,6 +156,9 @@ function draw() {
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].render();
   }
+  for (var i = enemies.length - 1; i >= 0; i--) {
+    enemies[i].render();
+  }
   ship.render();
   hud.render();
 }
@@ -157,6 +167,11 @@ function spawnAsteroids() {
   for (var i = 0; i < level + 1; i++) {
     asteroids.push(new Asteroid(null, null, 3));
   }
+}
+
+function spawnEnemy() {
+  var radius = random(20,30)
+  enemies.push(new Enemy(null, radius))
 }
 
 function cross(v1, v2) {

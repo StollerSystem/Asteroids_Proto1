@@ -67,6 +67,7 @@ function Ship(pos, r) {
 
   this.update = function () {
     Entity.prototype.update.call(this);
+    
     this.vel.mult(boostStabilizer);
     if (this.isDestroyed) {
       for (var i = 0; i < this.brokenParts.length; i++) {

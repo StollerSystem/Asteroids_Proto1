@@ -12,6 +12,7 @@ function Entity(x, y, radius)
 
 Entity.prototype.update = function() {
   this.heading += this.rotation;
+  
 
   // Accelerate using the heading and the accelMagnitude
   var force = p5.Vector.fromAngle(this.heading);
