@@ -135,8 +135,8 @@ function Ship(pos, r) {
 
     // Otherwise, we need to check for line intersection
     var vertices = [
-      createVector(-2 / 3 * this.r, this.r).rotate(this.heading),
-      createVector(-2 / 3 * this.r, -this.r).rotate(this.heading),
+      createVector(-this.r, this.r).rotate(this.heading),
+      createVector(-this.r, -this.r).rotate(this.heading),
       createVector(4 / 3 * this.r, 0).rotate(this.heading)
     ];
     for (var i = 0; i < vertices.length; i++) {

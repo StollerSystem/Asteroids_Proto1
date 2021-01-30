@@ -132,6 +132,24 @@ function draw() {
   }
 
   for (var i = enemies.length - 1; i >= 0; i--) {
+    if (ship.hits(enemies[i]) && canPlay) {
+      canPlay = false;
+      var dustVel = p5.Vector.add(ship.vel.mult(0.2), asteroids[i].vel);
+      addDust(ship.pos, dustVel, 15, .005, 3);
+      ship.destroy();
+      input.reset();
+      // sounds - need to stop rocket sounds here
+      ship.playSoundEffect(explosionSoundEffects);
+      rocketSoundEffects[0].stop();
+      rocketSoundEffects[1].stop();
+      setTimeout(function () {
+        lives--;
+        if (lives >= 0) {
+          ship = new Ship();
+          canPlay = true;
+        }
+      }, 3000);
+    }
     enemies[i].update();
   }
 

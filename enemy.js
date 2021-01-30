@@ -8,7 +8,8 @@ function Enemy(pos, r) {
   
   
   Entity.call(this, pos.x, pos.y, r)
-  this.crazyness = random(1,5);
+  // this.crazyness = random(1,5);
+  this.crazyness = 0;
   this.point = random(1,3);
   this.vel = p5.Vector.random2D();
   this.vel.mult(4);
@@ -55,8 +56,7 @@ function Enemy(pos, r) {
     vertex(0, this.r * this.point)
     endShape(CLOSE);
     ellipse(0,0,this.r,this.r)
-    pop();
-    
+    pop();    
     // push();
     // translate(this.pos.x, this.pos.y);
     // ellipse(0,0,this.r,this.r);
@@ -64,7 +64,21 @@ function Enemy(pos, r) {
     // fill(0);
     // strokeWeight(1);
     // pop();
+  }
 
+  this.vertices = function() {
+    var vertices = [
+      p5.Vector.add(createVector(this.r / 2, this.r / 2), this.pos),
+      p5.Vector.add(createVector(this.r * this.point, 0), this.pos),
+      p5.Vector.add(createVector(this.r / 2, -this.r / 2), this.pos),
+      p5.Vector.add(createVector(0, -this.r * this.point), this.pos),
+      p5.Vector.add(createVector(-this.r / 2, -this.r / 2), this.pos),
+      p5.Vector.add(createVector(-this.r * this.point, 0), this.pos),
+      p5.Vector.add(createVector(-this.r / 2, this.r / 2), this.pos),
+      p5.Vector.add(createVector(0, this.r * this.point), this.pos)
+    ]
+
+    return vertices;
   }
 }
 
