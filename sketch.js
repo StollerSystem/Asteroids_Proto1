@@ -128,6 +128,7 @@ function draw() {
             level++;
             stageClear = false;
             spawnAsteroids();
+            spawnEnemy();
             ship.shields = shieldTime;
           }, 4000)
         }

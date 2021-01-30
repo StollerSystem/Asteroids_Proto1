@@ -5,8 +5,9 @@ function Enemy(pos, r) {
   }
 
   Entity.call(this, pos.x, pos.y, r)
-  // this.crazyness = random(1,5);
-  this.crazyness = 10;
+  this.crazyness = random(1,3)+level;
+  this.shotThresh = random(1,2)+level;
+  // this.crazyness = 10;
   this.point = random(1, 3);
   this.vel = p5.Vector.random2D();
   this.vel.mult(4);
@@ -18,16 +19,17 @@ function Enemy(pos, r) {
 
     Entity.prototype.update.call(this);
     var changeCourse = random(1, 100)
-    if (changeCourse <= this.crazyness) {
-      // console.log("enemy boost!")
-      this.shootLaser();
-      // this.setAccel(1)
-      // this.vel = p5.Vector.random2D();
-      // this.vel.mult(4);
+    var shoot = random(1,25)
+    if (changeCourse <= this.crazyness) {      
+      this.setAccel(1)
+      this.vel = p5.Vector.random2D();
+      this.vel.mult(4);
     } else {
       this.setAccel(0)
     }
-
+    if (shoot <= this.shotThresh) {
+      this.shootLaser();
+    }
     // if (this.isDestroyed) {
     //   for (var i = 0; i < this.brokenParts.length; i++) {
     //     this.brokenParts[i].pos.add(this.brokenParts[i].vel);
