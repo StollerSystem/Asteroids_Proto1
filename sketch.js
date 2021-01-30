@@ -92,17 +92,20 @@ function draw() {
     asteroids[i].update();
   }
 
-  // Update the lasers' positions
+  // Update the lasers' positions and check for collisions 
   for (var i = lasers.length - 1; i >= 0; i--) {
+    var exists = true;
     lasers[i].update();
+
+    // Destroy lasers that go off screen.
     if (lasers[i].offscreen()) {
-      // Destroy lasers that go off screen.
       lasers.splice(i, 1);
       continue;
     }
-
+    // check all asteroids
     for (var j = asteroids.length - 1; j >= 0; j--) {
       if (lasers[i].hits(asteroids[j])) {
+        exists = false;
         // Handle laser contact with asteroids - handles graphics and sounds -
         // including asteroids that result from being hit.
         asteroids[j].playSoundEffect(explosionSoundEffects);
@@ -115,11 +118,11 @@ function draw() {
         // asteroid counterparts.
         var newAsteroids = asteroids[j].breakup();
         asteroids = asteroids.concat(newAsteroids);
-        // Laser and previous asteroid are removed as per the rules of the game.
+        // Laser and previous asteroid are removed 
         asteroids.splice(j, 1);
         lasers.splice(i, 1);
+        // Next level
         if (asteroids.length == 0) {
-          // Next level
           stageClear = true
           setTimeout(function () {
             level++;
@@ -129,13 +132,45 @@ function draw() {
           }, 4000)
         }
         break;
-      } else {
-        for (var k = enemies.length - 1; k >= 0; k--) {
-          if (lasers[i].hits(enemies[k]) && !lasers[i].enemy) {
-            // enemies[k].destroy();
-            enemies.splice(j, 1);
-          }
+      }
+    }
+
+    // check enemies
+    if (exists) {
+      for (var k = enemies.length - 1; k >= 0; k--) {
+        if (lasers[i].hits(enemies[k]) && !lasers[i].enemy) {
+          exists = false;
+          // enemies[k].destroy();
+          enemies.splice(j, 1);
+          lasers.splice(i, 1);
+          break;
         }
+      }
+    }
+
+    // check player       
+    if (exists) {
+      // console.log(lasers[i].hits(ship))
+      if (lasers[i].hits(ship) && lasers[i].enemy && canPlay) {
+
+        console.log("player hit!")
+        canPlay = false;
+        var dustVel = p5.Vector.add(ship.vel.mult(0.2), lasers[i].vel.mult(.2));
+        lasers.splice(i, 1);
+        addDust(ship.pos, dustVel, 15, .005, 3);
+        ship.destroy();
+        input.reset();
+        // sounds - need to stop rocket sounds here
+        ship.playSoundEffect(explosionSoundEffects);
+        rocketSoundEffects[0].stop();
+        rocketSoundEffects[1].stop();
+        setTimeout(function () {
+          lives--;
+          if (lives >= 0) {
+            ship = new Ship();
+            canPlay = true;
+          }
+        }, 3000);
       }
     }
   }

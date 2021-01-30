@@ -29,8 +29,8 @@ function Ship(pos, r) {
     if (score > 0) {
       score -= 5;
     }
-    
-    var dustVel = laser.vel.copy();    
+
+    var dustVel = laser.vel.copy();
     addDust(scope.pos, dustVel.mult(.5), 4, .045, 2, 5);
 
     var effect = laserSoundEffects[floor(random() * laserSoundEffects.length)];
@@ -67,7 +67,7 @@ function Ship(pos, r) {
 
   this.update = function () {
     Entity.prototype.update.call(this);
-    
+
     this.vel.mult(boostStabilizer);
     if (this.isDestroyed) {
       for (var i = 0; i < this.brokenParts.length; i++) {
@@ -91,9 +91,9 @@ function Ship(pos, r) {
       }
       this.lastPos[0][0] = createVector(this.pos.x - this.r * cos(this.heading), this.pos.y - this.r * sin(this.heading));
       this.lastPos[0][1] = this.heading;
-      if (this.tailEdge) {        
+      if (this.tailEdge) {
         this.lastPos[0][2] = 0;
-        this.tailEdge = false;        
+        this.tailEdge = false;
       } else {
         this.lastPos[0][2] = 1;
       }
@@ -134,22 +134,23 @@ function Ship(pos, r) {
     }
 
     // Otherwise, we need to check for line intersection
-    var vertices = [
+    var shipVertices = [
       createVector(-this.r, this.r).rotate(this.heading),
       createVector(-this.r, -this.r).rotate(this.heading),
       createVector(4 / 3 * this.r, 0).rotate(this.heading)
     ];
-    for (var i = 0; i < vertices.length; i++) {
-      vertices[i] = p5.Vector.add(vertices[i], this.pos);
+
+    for (var i = 0; i < shipVertices.length; i++) {
+      shipVertices[i] = p5.Vector.add(shipVertices[i], this.pos);
     }
     var asteroid_vertices = asteroid.vertices();
 
     for (var i = 0; i < asteroid_vertices.length; i++) {
-      for (var j = 0; j < vertices.length; j++) {
+      for (var j = 0; j < shipVertices.length; j++) {
         var next_i = (i + 1) % asteroid_vertices.length;
-        if (lineIntersect(vertices[j], vertices[(j + 1) % vertices.length],
+        if (lineIntersect(shipVertices[j], shipVertices[(j + 1) % shipVertices.length],
           asteroid_vertices[i], asteroid_vertices[next_i])) {
-          
+
           return true;
         }
       }
@@ -157,12 +158,22 @@ function Ship(pos, r) {
     return false;
   }
 
-  this.playSoundEffect = function(soundArray){
-    soundArray[floor(random(0,soundArray.length))].play();
+  this.playSoundEffect = function (soundArray) {
+    soundArray[floor(random(0, soundArray.length))].play();
   }
 
+  this.vertices = function () {
+    var shipVertices = [
+      p5.Vector.add(createVector(-this.r, this.r),this.pos),
+      p5.Vector.add(createVector(-this.r, -this.r),this.pos),
+      p5.Vector.add(createVector(4 / 3 * this.r, 0),this.pos)
+    ]
+    return shipVertices;
+  }
+
+
   this.render = function () {
-    if (this.isDestroyed) {      
+    if (this.isDestroyed) {
       // ship debris
       for (var i = 0; i < this.brokenParts.length; i++) {
         push();
@@ -180,12 +191,12 @@ function Ship(pos, r) {
       for (var i = this.lastPos.length - 2; i >= 0; i--) {
         push();
         // won't render the tail stroke right after respawn...looks werid 
-        if (this.shields < 170 ) {
+        if (this.shields < 170) {
           stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${this.lastPos[i][2] / 10})`)
         } else {
           stroke(0);
         }
-        fill(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${this.lastPos[i][2] / random(4,6)})`);
+        fill(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${this.lastPos[i][2] / random(4, 6)})`);
         beginShape();
         vertex(this.lastPos[i][0].x + sin(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r, this.lastPos[i][0].y - cos(this.lastPos[i][1]) * -1 * ((this.lastPos.length - i / 1.05) / this.lastPos.length) * this.r);
 
@@ -204,9 +215,9 @@ function Ship(pos, r) {
       rotate(this.heading);
       fill(0);
       // shield up effect 
-      var shieldTrans = random(1,.3)
+      var shieldTrans = random(1, .3)
       var shieldCol = `rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${shieldTrans})`
-      var weight = this.shields > 0 ? random(1.5,4) : random(1,1.5);
+      var weight = this.shields > 0 ? random(1.5, 4) : random(1, 1.5);
       var shipColor = this.shields > 0 ? shieldCol : `rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`;
       stroke(shipColor);
       strokeWeight(weight)

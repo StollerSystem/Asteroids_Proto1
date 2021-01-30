@@ -1,10 +1,10 @@
-function Laser(spos, svel, angle, enemy) {  
-  
+function Laser(spos, svel, angle, enemy) {
+
   Entity.call(this, spos.x, spos.y, 4);
   this.pos = createVector(spos.x, spos.y);
   this.vel = p5.Vector.fromAngle(angle);
   this.vel.mult(10);
-  this.vel.add(svel);  
+  this.vel.add(svel);
   this.enemy = enemy ? enemy : false;
 
   this.render = function () {
@@ -12,7 +12,7 @@ function Laser(spos, svel, angle, enemy) {
     push();
     var trans = random(1, .8)
     stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${trans})`);
-    strokeWeight(this.r*1.5);
+    strokeWeight(this.r * 1.5);
     point(this.pos.x, this.pos.y);
     pop();
     // glow effect
@@ -26,10 +26,11 @@ function Laser(spos, svel, angle, enemy) {
   }
 
   this.playSoundEffect = function (sound) {
-    sound.play();    
+    sound.play();
   }
 
   this.hits = function (asteroid) {
+    
     // Evaluate if the asteroid was hit based on the range of the laser if one
     // of these conditions hold, then there is no need to check that the laser
     // intersected the asteroid.
@@ -47,6 +48,7 @@ function Laser(spos, svel, angle, enemy) {
     // are the edges that form the asteroid.
     var last_pos = p5.Vector.sub(this.pos, this.vel);
     var asteroid_vertices = asteroid.vertices();
+    // console.log(asteroid_vertices)
     for (var i = 0; i < asteroid_vertices.length - 1; i++) {
       if (lineIntersect(last_pos,
         this.pos,
@@ -73,6 +75,14 @@ function Laser(spos, svel, angle, enemy) {
     }
     return false;
   }
+
+  this.vertices = function () {
+    var vertices = []
+    var vec = createVector(this.pos.x, this.pos.y);
+    vertices.push(p5.Vector.add(vec, this.pos));
+    return vertices;
+  }
+
 }
 
 Laser.prototype = Object.create(Entity.prototype);

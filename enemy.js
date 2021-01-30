@@ -6,7 +6,7 @@ function Enemy(pos, r) {
 
   Entity.call(this, pos.x, pos.y, r)
   // this.crazyness = random(1,5);
-  this.crazyness = 3;
+  this.crazyness = 10;
   this.point = random(1, 3);
   this.vel = p5.Vector.random2D();
   this.vel.mult(4);
@@ -19,11 +19,11 @@ function Enemy(pos, r) {
     Entity.prototype.update.call(this);
     var changeCourse = random(1, 100)
     if (changeCourse <= this.crazyness) {
-      console.log("enemy boost!")
+      // console.log("enemy boost!")
       this.shootLaser();
-      this.setAccel(1)
-      this.vel = p5.Vector.random2D();
-      this.vel.mult(4);
+      // this.setAccel(1)
+      // this.vel = p5.Vector.random2D();
+      // this.vel.mult(4);
     } else {
       this.setAccel(0)
     }
@@ -103,20 +103,18 @@ function Enemy(pos, r) {
   // }
 
   this.vertices = function () {
-    if (!this.isDestroyed) {
-      var vertices = [
-        p5.Vector.add(createVector(this.r / 2, this.r / 2), this.pos),
-        p5.Vector.add(createVector(this.r * this.point, 0), this.pos),
-        p5.Vector.add(createVector(this.r / 2, -this.r / 2), this.pos),
-        p5.Vector.add(createVector(0, -this.r * this.point), this.pos),
-        p5.Vector.add(createVector(-this.r / 2, -this.r / 2), this.pos),
-        p5.Vector.add(createVector(-this.r * this.point, 0), this.pos),
-        p5.Vector.add(createVector(-this.r / 2, this.r / 2), this.pos),
-        p5.Vector.add(createVector(0, this.r * this.point), this.pos)
-      ]
-    } else {
-      var vertices = [];
-    }
+
+    var vertices = [
+      p5.Vector.add(createVector(this.r / 2, this.r / 2), this.pos),
+      p5.Vector.add(createVector(this.r * this.point, 0), this.pos),
+      p5.Vector.add(createVector(this.r / 2, -this.r / 2), this.pos),
+      p5.Vector.add(createVector(0, -this.r * this.point), this.pos),
+      p5.Vector.add(createVector(-this.r / 2, -this.r / 2), this.pos),
+      p5.Vector.add(createVector(-this.r * this.point, 0), this.pos),
+      p5.Vector.add(createVector(-this.r / 2, this.r / 2), this.pos),
+      p5.Vector.add(createVector(0, this.r * this.point), this.pos)
+    ]
+
     return vertices;
   }
 }
