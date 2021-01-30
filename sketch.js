@@ -3,6 +3,7 @@ var hud;
 var asteroids = [];
 var lasers = [];
 var enemies = [];
+var enemiesBrokenParts = [];
 var laserSoundEffects = [];
 var explosionSoundEffects = [];
 var rocketSoundEffects = [];
@@ -127,6 +128,13 @@ function draw() {
           }, 4000)
         }
         break;
+      }
+    }
+
+    for (var k = enemies.length - 1; k >= 0; k--) {
+      if (lasers[i].hits(enemies[k])) {
+        // enemies[k].destroy();
+        enemies.splice(j, 1);
       }
     }
   }
