@@ -16,7 +16,7 @@ var rgbColor3;
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 var mainFont;
 var pts;
-var title = true;
+var title = false;
 var stageClear = false; 
 var score = 0;
 var lives = 3;
