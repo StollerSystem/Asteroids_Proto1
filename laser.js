@@ -1,10 +1,11 @@
-function Laser(spos, svel, angle) {  
+function Laser(spos, svel, angle, enemy) {  
   
   Entity.call(this, spos.x, spos.y, 4);
   this.pos = createVector(spos.x, spos.y);
   this.vel = p5.Vector.fromAngle(angle);
   this.vel.mult(10);
   this.vel.add(svel);  
+  this.enemy = enemy ? enemy : false;
 
   this.render = function () {
     // laser bolt

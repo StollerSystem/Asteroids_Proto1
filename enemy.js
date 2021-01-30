@@ -6,7 +6,7 @@ function Enemy(pos, r) {
 
   Entity.call(this, pos.x, pos.y, r)
   // this.crazyness = random(1,5);
-  this.crazyness = 0;
+  this.crazyness = 3;
   this.point = random(1, 3);
   this.vel = p5.Vector.random2D();
   this.vel.mult(4);
@@ -28,18 +28,18 @@ function Enemy(pos, r) {
       this.setAccel(0)
     }
 
-    if (this.isDestroyed) {
-      for (var i = 0; i < this.brokenParts.length; i++) {
-        this.brokenParts[i].pos.add(this.brokenParts[i].vel);
-        this.brokenParts[i].heading += this.brokenParts[i].rot;
-      }
-    }
+    // if (this.isDestroyed) {
+    //   for (var i = 0; i < this.brokenParts.length; i++) {
+    //     this.brokenParts[i].pos.add(this.brokenParts[i].vel);
+    //     this.brokenParts[i].heading += this.brokenParts[i].rot;
+    //   }
+    // }
 
   }
 
   var scope = this;
   this.shootLaser = function () {
-    var laser = new Laser(scope.pos, scope.vel, scope.heading);
+    var laser = new Laser(scope.pos, scope.vel, scope.heading, true);
     var dustVel = laser.vel.copy();
     addDust(scope.pos, dustVel.mult(.5), 4, .045, 2, 5);
     lasers.push(laser);

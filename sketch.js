@@ -3,12 +3,13 @@ var hud;
 var asteroids = [];
 var lasers = [];
 var enemies = [];
-var enemiesBrokenParts = [];
+// var enemiesBrokenParts = [];
 var laserSoundEffects = [];
 var explosionSoundEffects = [];
 var rocketSoundEffects = [];
 var stageSoundEffect;
 var dust = [];
+var debris = []; //need to build out debris 
 var canPlay = true;
 var shieldTime = 180;
 var rgbColor1;
@@ -18,7 +19,7 @@ var boostStabilizer = 1; // anything below one will slow ship down after boostin
 var mainFont;
 var pts;
 var title = false;
-var stageClear = false; 
+var stageClear = false;
 var score = 0;
 var lives = 3;
 const points = [200, 100, 50, 25];
@@ -28,13 +29,13 @@ function preload() {
 
   mainFont = loadFont('digital.ttf')
   // randomize colors
-  rgbColor1 = [Math.round(random(0,255)), Math.round(random(0,255)), Math.round(random(0,255))]
-  rgbColor2 = [Math.round(random(0,255)), Math.round(random(0,255)), Math.round(random(0,255))]
-  rgbColor3 = [Math.round(random(0,255)), Math.round(random(0,255)), Math.round(random(0,255))]
+  rgbColor1 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
+  rgbColor2 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
+  rgbColor3 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
   console.log(rgbColor1)
   console.log(rgbColor2)
   console.log(rgbColor3)
-  
+
 
   // Laser and Explosion Sound Effects are loaded here as opposed to the laser
   // or asteroid files because the asteroid destruction logic is here and it
@@ -51,7 +52,7 @@ function preload() {
   stageSoundEffect = loadSound('audio/stage-complete.wav')
 }
 
-function setup() {  
+function setup() {
 
   createCanvas(windowWidth, windowHeight);
   ship = new Ship();
@@ -128,13 +129,13 @@ function draw() {
           }, 4000)
         }
         break;
-      }
-    }
-
-    for (var k = enemies.length - 1; k >= 0; k--) {
-      if (lasers[i].hits(enemies[k])) {
-        // enemies[k].destroy();
-        enemies.splice(j, 1);
+      } else {
+        for (var k = enemies.length - 1; k >= 0; k--) {
+          if (lasers[i].hits(enemies[k]) && !lasers[i].enemy) {
+            // enemies[k].destroy();
+            enemies.splice(j, 1);
+          }
+        }
       }
     }
   }
@@ -196,7 +197,7 @@ function spawnAsteroids() {
 }
 
 function spawnEnemy() {
-  var radius = random(20,30)
+  var radius = random(20, 30)
   enemies.push(new Enemy(null, radius))
 }
 
