@@ -142,6 +142,10 @@ function draw() {
         if (lasers[i].hits(enemies[k]) && !lasers[i].enemy) {
           exists = false;
           // enemies[k].destroy();
+          let dustVel = p5.Vector.add(lasers[i].vel.mult(0.5), enemies[k].vel);          
+          addDust(enemies[k].pos, dustVel, 25, .005, 2, 3);
+          addDebris(enemies[k].pos, enemies[k].vel, 10, 30);
+          addDust
           enemies.splice(j, 1);
           lasers.splice(i, 1);
           break;
@@ -153,8 +157,6 @@ function draw() {
     if (exists) {
       // console.log(lasers[i].hits(ship))
       if (lasers[i].hits(ship) && lasers[i].enemy && canPlay) {
-
-        console.log("player hit!")
         canPlay = false;
         var dustVel = p5.Vector.add(ship.vel.mult(0.2), lasers[i].vel.mult(.2));
         lasers.splice(i, 1);
@@ -200,12 +202,20 @@ function draw() {
 
   ship.update();
 
-  // DESTROY DUST
+  // UPDATE AND DESTROY DUST
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].update();
     if (dust[i].transparency <= 0) {
       dust.splice(i, 1);
     }
+  }
+
+  // UPDATE AND DESTROY DEBRIS
+  for (var i = debris.length - 1; i >= 0; i--) {
+    debris[i].update();
+    // if (debris[i].destroyFrames <= 0) {
+    //   debris.splice(i, 1);
+    // }
   }
 
   // Render
@@ -218,6 +228,9 @@ function draw() {
   }
   for (var i = dust.length - 1; i >= 0; i--) {
     dust[i].render();
+  }
+  for (var i = debris.length - 1; i >= 0; i--) {
+    debris[i].render();
   }
   for (var i = enemies.length - 1; i >= 0; i--) {
     enemies[i].render();
