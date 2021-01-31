@@ -7,8 +7,7 @@ function Enemy(r) {
   createVector(-r, random(height))
   ]
   
-  var pos = outOfBounds[floor(random(0,4))]
-  console.log(pos)
+  var pos = outOfBounds[floor(random(0,4))]  
 
   Entity.call(this, pos.x, pos.y, r)
   this.crazyness = random(1,3)+level;

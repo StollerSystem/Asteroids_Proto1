@@ -3,6 +3,7 @@ var hud;
 var asteroids = [];
 var lasers = [];
 var enemies = [];
+var possibleEnemies = 1;
 // var enemiesBrokenParts = [];
 var laserSoundEffects = [];
 var explosionSoundEffects = [];
@@ -59,7 +60,7 @@ function setup() {
   hud = new Hud();
   spawnAsteroids();
   //enemy test
-  spawnEnemy();
+  // spawnEnemy();
 
   pts = mainFont.textToPoints('ASTRO-BLASTER', 0, 0, 200, {
     sampleFactor: 0.25,
@@ -68,6 +69,17 @@ function setup() {
 }
 
 function draw() {
+
+  // RANDOM EMY SPAWN
+  if (!stageClear && possibleEnemies > 0) {
+    let ranNum = random(750);
+    // console.log(ranNum)
+    if (ranNum <= 1) {
+      // console.log("SPAWN!")
+      spawnEnemy();
+      possibleEnemies--;
+    }
+  }
   // Handles the round loss, destruction of ship and round restart when the
   // ship contacts an asteroid.
   for (var i = 0; i < asteroids.length; i++) {
@@ -126,9 +138,10 @@ function draw() {
           stageClear = true
           setTimeout(function () {
             level++;
+            possibleEnemies += level;
             stageClear = false;
             spawnAsteroids();
-            spawnEnemy();
+            // spawnEnemy();
             ship.shields = shieldTime;
           }, 4000)
         }
