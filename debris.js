@@ -15,7 +15,7 @@ function Debris(pos, vel, n, r) {
       len: random(.07,.6)
     };
 
-  console.log(this.debrisParts)
+  // console.log(this.debrisParts)
 
   this.update = function () {
     // console.log("check")

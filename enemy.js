@@ -1,8 +1,14 @@
-function Enemy(pos, r) {
+function Enemy(r) {
 
-  if (pos == null) {
-    pos = createVector(random(width), random(height));
-  }
+  var outOfBounds = [  
+  createVector(random(width), -r),
+  createVector(width+r, random(height)),
+  createVector(random(width), height+r),
+  createVector(-r, random(height))
+  ]
+  
+  var pos = outOfBounds[floor(random(0,4))]
+  console.log(pos)
 
   Entity.call(this, pos.x, pos.y, r)
   this.crazyness = random(1,3)+level;
@@ -81,28 +87,10 @@ function Enemy(pos, r) {
       endShape(CLOSE);
       ellipse(0, 0, this.r, this.r)
       pop();
-    }
-    // push();
-    // translate(this.pos.x, this.pos.y);
-    // ellipse(0,0,this.r,this.r);
-    // stroke(255);
-    // fill(0);
-    // strokeWeight(1);
-    // pop();
+    }    
   }
 
-  // this.brokenParts = [];
-
-  // this.destroy = function () {
-  //   this.isDestroyed = true;
-  //   for (var i = 0; i < 12; i++)
-  //     brokenParts[i] = {
-  //       pos: this.pos.copy(),
-  //       vel: p5.Vector.random2D(),
-  //       heading: random(0, 360),
-  //       rot: random(-0.07, 0.07)
-  //     };
-  // }
+  
 
   this.vertices = function () {
 

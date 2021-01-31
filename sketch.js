@@ -149,7 +149,7 @@ function draw() {
           enemies.splice(j, 1);
           lasers.splice(i, 1);
           break;
-        }
+         }
       }
     }
 
@@ -247,7 +247,7 @@ function spawnAsteroids() {
 
 function spawnEnemy() {
   var radius = random(20, 30)
-  enemies.push(new Enemy(null, radius))
+  enemies.push(new Enemy(radius))
 }
 
 function cross(v1, v2) {
