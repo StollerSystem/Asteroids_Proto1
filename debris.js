@@ -9,10 +9,10 @@ function Debris(pos, vel, n, r) {
   for (var i = 0; i < n; i++)
     this.debrisParts[i] = {
       pos: this.pos.copy(),
-      vel: this.vel.copy().add(p5.Vector.random2D().mult(random(1,2))),
+      vel: this.vel.copy().add(p5.Vector.random2D().mult(random(1,1.5))),
       heading: random(0, 360),
       rot: random(-0.2, 0.2),
-      len: random(.07,.6)
+      len: random(.05,.5)
     };
 
   // console.log(this.debrisParts)
@@ -33,7 +33,8 @@ function Debris(pos, vel, n, r) {
       push();
       let transNum = (1 * ((this.destroyFrames--) / 1000))
       let trans = transNum > 0 ? transNum : 0;
-      stroke(`rgba(${255},${255},${255},${trans})`);
+      stroke(`rgba(${rgbColor4[0]},${rgbColor4[1]},${rgbColor4[2]},${trans})`);
+      strokeWeight(random(1,2.5))
       var d = this.debrisParts[i];
       translate(d.pos.x, d.pos.y);
       rotate(d.heading);

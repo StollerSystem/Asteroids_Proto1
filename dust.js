@@ -15,11 +15,7 @@ function Dust(pos, vel, trans, color, weight) {
   this.render = function () {
     if (this.transparency > 0) {
       push();
-      // if (this.color === "main") {
-      //   stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},${this.transparency})`);
-      // } else {
-      //   stroke(`rgba(${rgbColor2[0]},${rgbColor2[1]},${rgbColor2[2]},${this.transparency})`);
-      // } 
+      // stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},${this.transparency})`);
       switch (color) {
         case 1:
           stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},${this.transparency})`);

@@ -10,8 +10,8 @@ function Enemy(r) {
   var pos = outOfBounds[floor(random(0,4))]  
 
   Entity.call(this, pos.x, pos.y, r)
-  this.crazyness = random(1,3)+level;
-  this.shotThresh = random(1,2)+level;
+  this.crazyness = random(1,3+level/3);
+  this.shotThresh = random(1,2+level/4);
   // this.crazyness = 10;
   this.point = random(1, 3);
   this.vel = p5.Vector.random2D();
@@ -60,7 +60,7 @@ function Enemy(r) {
         push();
         let transNum = (1 * ((this.destroyFrames--) / 1000))
         let trans = transNum > 0 ? transNum : 0;
-        stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${trans})`);
+        stroke(`rgba(${rgbColor4[0]},${rgbColor4[1]},${rgbColor4[2]},${trans})`);
         var bp = this.brokenParts[i];
         translate(bp.pos.x, bp.pos.y);
         rotate(bp.heading);
@@ -71,8 +71,8 @@ function Enemy(r) {
       push();
       translate(this.pos.x, this.pos.y);
       rotate(this.heading);
-      stroke(255)
-      strokeWeight(random(1, 1.5))
+      stroke(`rgba(${rgbColor4[0]},${rgbColor4[1]},${rgbColor4[2]},${1})`);
+      strokeWeight(random(1, 2.5))
       fill(0);
       beginShape();
       vertex(this.r / 2, this.r / 2)

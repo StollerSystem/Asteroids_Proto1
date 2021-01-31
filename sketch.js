@@ -33,9 +33,12 @@ function preload() {
   rgbColor1 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
   rgbColor2 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
   rgbColor3 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
+  rgbColor4 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
+  
   console.log(rgbColor1)
   console.log(rgbColor2)
   console.log(rgbColor3)
+  console.log(rgbColor4)
 
 
   // Laser and Explosion Sound Effects are loaded here as opposed to the laser
@@ -71,8 +74,8 @@ function setup() {
 function draw() {
 
   // RANDOM EMY SPAWN
-  if (!stageClear && possibleEnemies > 0) {
-    let ranNum = random(750);
+  if (!stageClear && possibleEnemies > 0 && enemies.length <= 1) {
+    let ranNum = random(1000);
     // console.log(ranNum)
     if (ranNum <= 1) {
       // console.log("SPAWN!")
@@ -123,8 +126,8 @@ function draw() {
         asteroids[j].playSoundEffect(explosionSoundEffects);
         score += points[asteroids[j].size];
         var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
-        var dustNum = (asteroids[j].size * 2 + 1) * 7;
-        addDust(asteroids[j].pos, dustVel, dustNum);
+        var dustNum = (asteroids[j].size * 2 + 1) * 5;
+        addDust(asteroids[j].pos, dustVel, dustNum, .008, 1,  3.5);
         // The new smaller asteroids broken lasers are added to the same list
         // of asteroids, so they can be referenced the same way as their full
         // asteroid counterparts.
@@ -133,7 +136,7 @@ function draw() {
         // Laser and previous asteroid are removed 
         asteroids.splice(j, 1);
         lasers.splice(i, 1);
-        // Next level
+        // Next levelW
         if (asteroids.length == 0) {
           stageClear = true
           setTimeout(function () {
