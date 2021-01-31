@@ -29,12 +29,22 @@ var level = 0;
 function preload() {
 
   mainFont = loadFont('digital.ttf')
+
   // randomize colors
-  rgbColor1 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
-  rgbColor2 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
-  rgbColor3 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
-  rgbColor4 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]
-  
+  let ran1 = Math.round(random(1,3))  
+  let c1a = ran1 === 1 ? 0 : 255;
+  let c1b = ran1 === 2 ? 0 : 255;
+  let c1c = ran1 === 3 ? 0 : 255;
+  rgbColor1 = [Math.round(random(0, c1a)), Math.round(random(0, c1b)), Math.round(random(0, c1c))]  
+  let c2a = ran1 === 3 ? 0 : 255;
+  let c2b = ran1 === 1 ? 0 : 255;
+  let c2c = ran1 === 2 ? 0 : 255;
+  rgbColor2 = [Math.round(random(0, c2a)), Math.round(random(0, c2b)), Math.round(random(0, c2c))]
+  let c3a = ran1 === 2 ? 0 : 255;
+  let c3b = ran1 === 3 ? 0 : 255;
+  let c3c = ran1 === 1 ? 0 : 255;
+  rgbColor3 = [Math.round(random(0, c3a)), Math.round(random(0, c3b)), Math.round(random(0, c3c))]
+  rgbColor4 = [Math.round(random(0, 255)), Math.round(random(0, 255)), Math.round(random(0, 255))]  
   console.log(rgbColor1)
   console.log(rgbColor2)
   console.log(rgbColor3)
