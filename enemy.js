@@ -10,8 +10,8 @@ function Enemy(r) {
   var pos = outOfBounds[floor(random(0,4))]  
 
   Entity.call(this, pos.x, pos.y, r)
-  this.crazyness = random(1,3+level/3);
-  this.shotThresh = random(1,2+level/4);
+  this.crazyness = random(1,2+level/4);
+  this.shotThresh = random(1,1.5+level/5);
   // this.crazyness = 10;
   this.point = random(1, 3);
   this.vel = p5.Vector.random2D();

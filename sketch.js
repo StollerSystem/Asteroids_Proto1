@@ -84,7 +84,7 @@ function setup() {
 function draw() {
 
   // RANDOM EMY SPAWN
-  if (!stageClear && possibleEnemies > 0 && enemies.length <= 1) {
+  if (!stageClear && possibleEnemies > 0 && enemies.length < 1) {
     let ranNum = random(1000);
     // console.log(ranNum)
     if (ranNum <= 1) {
