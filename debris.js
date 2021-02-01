@@ -1,6 +1,6 @@
 function Debris(pos, vel, n, r) {
 
-  this.destroyFrames = 2200;
+  this.destroyFrames = 1300;
   this.r = r
   this.pos = pos.copy();
   this.vel = vel.copy();

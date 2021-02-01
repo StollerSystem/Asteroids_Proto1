@@ -19,7 +19,7 @@ var rgbColor3;
 var boostStabilizer = 1; // anything below one will slow ship down after boosting 
 var mainFont;
 var pts;
-var title = false;
+var title = true;
 var stageClear = false;
 var score = 0;
 var lives = 3;
@@ -30,12 +30,13 @@ function preload() {
 
   mainFont = loadFont('digital.ttf')
 
-  // randomize colors
+  // randomize colors 
   let ran1 = Math.round(random(1,3))  
   let c1a = ran1 === 1 ? 0 : 255;
   let c1b = ran1 === 2 ? 0 : 255;
   let c1c = ran1 === 3 ? 0 : 255;
   rgbColor1 = [Math.round(random(0, c1a)), Math.round(random(0, c1b)), Math.round(random(0, c1c))]  
+
   let c2a = ran1 === 3 ? 0 : 255;
   let c2b = ran1 === 1 ? 0 : 255;
   let c2c = ran1 === 2 ? 0 : 255;
@@ -75,16 +76,16 @@ function setup() {
   //enemy test
   // spawnEnemy();
 
-  pts = mainFont.textToPoints('ASTRO-BLASTER', 0, 0, 200, {
-    sampleFactor: 0.25,
-    simplifyThreshold: 0
-  });
+  // pts = mainFont.textToPoints('ASTRO-BLASTER', 0, 0, 200, {
+  //   sampleFactor: 0.25,
+  //   simplifyThreshold: 0
+  // });
 }
 
 function draw() {
 
   // RANDOM EMY SPAWN
-  if (!stageClear && possibleEnemies > 0 && enemies.length < 1) {
+  if (!title && !stageClear && possibleEnemies > 0 && enemies.length < 1) {
     let ranNum = random(1000);
     // console.log(ranNum)
     if (ranNum <= 1) {
@@ -134,7 +135,9 @@ function draw() {
         // Handle laser contact with asteroids - handles graphics and sounds -
         // including asteroids that result from being hit.
         asteroids[j].playSoundEffect(explosionSoundEffects);
-        score += points[asteroids[j].size];
+        if (!lasers[i].enemy) {
+          score += points[asteroids[j].size];
+        }
         var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
         var dustNum = (asteroids[j].size * 2 + 1) * 5;
         addDust(asteroids[j].pos, dustVel, dustNum, .008, 1,  3.5);
@@ -162,14 +165,15 @@ function draw() {
       }
     }
 
-    // check enemies
+    // check enemies + laser collision
     if (exists) {
       for (var k = enemies.length - 1; k >= 0; k--) {
         if (lasers[i].hits(enemies[k]) && !lasers[i].enemy) {
           exists = false;
+          score += 500;
           // enemies[k].destroy();
           let dustVel = p5.Vector.add(lasers[i].vel.mult(0.5), enemies[k].vel);          
-          addDust(enemies[k].pos, dustVel, 25, .005, 2, 3);
+          addDust(enemies[k].pos, dustVel, 10, .001, 2, 3);
           addDebris(enemies[k].pos, enemies[k].vel, 10, 30);
           addDust
           enemies.splice(j, 1);
@@ -179,7 +183,7 @@ function draw() {
       }
     }
 
-    // check player       
+    // check player + laser collision     
     if (exists) {
       // console.log(lasers[i].hits(ship))
       if (lasers[i].hits(ship) && lasers[i].enemy && canPlay) {

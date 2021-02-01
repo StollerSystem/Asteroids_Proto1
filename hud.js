@@ -56,21 +56,21 @@ function Hud() {
       textSize(25);
       textFont(mainFont)
       stroke(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
-      strokeWeight(random(1,1.5))
+      strokeWeight(random(1,2))
       fill(`rgba(${rgbColor1[0]},${rgbColor1[1]},${rgbColor1[2]},1)`);
       text("'UP_ARROW: FORWARD THRUST' - 'LEFT/RIGHT_ARROW: ROTATIONAL THRUST' - 'SPACE_BAR: BLASTER'", (width / 2 -410) , height / 3 +50);
       pop();
 
       push();
       stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},1)`);
-      strokeWeight(random(1,1.5))
+      strokeWeight(random(1,2))
       translate((width / 2) - 575, height / 3);      
       noFill();
-      let rotX = sin(frameCount / 20) * 10;
-      let rotY = cos(frameCount / 20) * 10;
-      for (let i = 0; i < pts.length; i++) {
-        line(pts[i].x, pts[i].y, pts[i].x - rotX, pts[i].y - rotY);
-      }
+      let rotX = sin(frameCount / 25) * 10;
+      let rotY = cos(frameCount / 25) * 10;
+      // for (let i = 0; i < pts.length; i++) {
+      //   line(pts[i].x, pts[i].y, pts[i].x - rotX, pts[i].y - rotY);
+      // }
       textFont(mainFont);
       textSize(200);
       text('ASTRO-BLASTER', 0, 0);

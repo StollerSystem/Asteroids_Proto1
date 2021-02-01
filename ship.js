@@ -1,7 +1,7 @@
 function Ship(pos, r) {
   Entity.call(this, width / 2, height / 2, 20);
   this.isDestroyed = false;
-  this.destroyFrames = 1000;
+  this.destroyFrames = 1050;
   this.shields = shieldTime;
   this.rmax = 4 / 3 * this.r;
   this.rmax2 = this.rmax * this.rmax;
@@ -180,6 +180,7 @@ function Ship(pos, r) {
         let transNum = (1 * ((this.destroyFrames--) / 1000))
         let trans = transNum > 0 ? transNum : 0;
         stroke(`rgba(${rgbColor3[0]},${rgbColor3[1]},${rgbColor3[2]},${trans})`);
+        strokeWeight(random(1,1.5))
         var bp = this.brokenParts[i];
         translate(bp.pos.x, bp.pos.y);
         rotate(bp.heading);
