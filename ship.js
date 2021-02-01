@@ -108,9 +108,10 @@ function Ship(pos, r) {
     for (var i = 0; i < 6; i++)
       this.brokenParts[i] = {
         pos: this.pos.copy(),
-        vel: p5.Vector.random2D(),
+        // vel: p5.Vector.random2D(),
+        vel: this.vel.copy().add(p5.Vector.random2D().mult(random(1,1.8))),
         heading: random(0, 360),
-        rot: random(-0.07, 0.07)
+        rot: random(-0.09, 0.09)
       };
   }
 
